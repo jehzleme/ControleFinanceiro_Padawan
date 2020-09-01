@@ -6,6 +6,7 @@ namespace Padawan.Financeiro.Negocio
 {
     class Debito
     {
-        public double valor { get; set; }
+        public double Valor { get; set; }
+        public DateTime Data { get; set; }
     }
 }
