@@ -1,22 +1,47 @@
-﻿using Padawan.Financeiro.Negocio.Model;
+﻿using Padawan.Financeiro.Negocio.Interfaces;
+using Padawan.Financeiro.Negocio.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Padawan.Financeiro.Negocio
 {
-    public class Balanco
+    public class Balanco : IBalanco
     {
-        public object Saldo { get; set; }
+        
 
-        public void Add(Credito credito)
+        public double Saldo { get => CalcularSaldo();}
+        public List<IOperacao> Operacoes { get; } = new List<IOperacao>();
+
+
+        private double CalcularSaldo()
         {
-            throw new NotImplementedException();
+            double result = 0;
+
+            foreach (var item in Operacoes)
+            {
+                if (item is Debito)
+                {
+                    result -= item.Valor;
+                }
+                if (item is Credito)
+                {
+                    result += item.Valor;
+                }
+            }
+            return result;
         }
 
-        public void Add(Debito debito)
+        public void Add(IOperacao operacao)
         {
-            throw new NotImplementedException();
+            Operacoes.Add(operacao);
+            
+        }
+      
+
+        public void Delete(IOperacao operacao)
+        {
+            Operacoes.Remove(operacao);
+           
         }
     }
 }

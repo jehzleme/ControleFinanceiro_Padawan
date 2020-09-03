@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Padawan.Financeiro.Negocio.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Padawan.Financeiro.Negocio.Model
 {
-    public class Credito
+    public class Credito : IOperacao
     {
-
-        public Credito(double v)
+        public Credito(double valor)
         {
-            Valor = v;
+            Valor = valor;
         }
 
         public double Valor { get; set; }
