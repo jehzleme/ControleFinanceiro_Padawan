@@ -36,7 +36,6 @@ namespace Padawan.Financeiro.Negocio
             Operacoes.Add(operacao);
             
         }
-      
 
         public void Delete(IOperacao operacao)
         {
