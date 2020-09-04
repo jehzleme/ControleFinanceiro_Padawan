@@ -22,8 +22,7 @@ namespace Padawan.Financeiro.View
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
         {
-
-            
+         
            // como faço isso por tipo e nao passando a string que ela ali dentro pra eu nao fazer if toda vez que eu adicionar algo
             if (cmb_Tipo.Text == "Credito")
             {
