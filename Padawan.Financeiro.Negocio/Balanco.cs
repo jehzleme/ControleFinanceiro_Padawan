@@ -7,13 +7,13 @@ namespace Padawan.Financeiro.Negocio
 {
     public class Balanco : IBalanco
     {
+
+        public  double Saldo { get => CalcularSaldo();}
+       public  List<IOperacao> Operacoes { get; } = new List<IOperacao>();
+
         
 
-        public double Saldo { get => CalcularSaldo();}
-        public List<IOperacao> Operacoes { get; } = new List<IOperacao>();
-
-
-        private double CalcularSaldo()
+        private  double CalcularSaldo()
         {
             double result = 0;
 
@@ -37,7 +37,7 @@ namespace Padawan.Financeiro.Negocio
             
         }
 
-        public void Delete(IOperacao operacao)
+        public  void Delete(IOperacao operacao)
         {
             Operacoes.Remove(operacao);
            
