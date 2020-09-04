@@ -1,39 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+﻿using LiteDB;
+using Padawan.Financeiro.Negocio.Model;
+using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Padawan.Financeiro.View
 {
     public partial class FormsCategoria : Form
     {
-        private readonly Padawan.Financeiro.Negocio.Model.Categoria categoria;
+        private Categoria categoria;
         public FormsCategoria()
         {
             InitializeComponent();
-            categoria = new Padawan.Financeiro.Negocio.Model.Categoria();
+            categoria = new Categoria();
 
-            //foreach (var item in categoria.Listar())
-            //{
-            //    list_Categoria.Items.Add(item);
-            //}
+            using (var db = new LiteDatabase("banco.db"))
+            {
+                var teste = db.GetCollection<Categoria>("Categoria");
+                var colecao = teste.FindAll();
+
+                colecao.ToList().ForEach(p =>
+                {
+                    list_Categoria.Text = p.Descricao;
+                });
+            }
         }
 
         private void btn_AdicionarCategoria_Click(object sender, EventArgs e)
         {
-            categoria.Add(txt_Categoria.Text);
-            list_Categoria.Items.Add(txt_Categoria.Text);
-            txt_Categoria.Text = "";
-        }
+            categoria.Add(new CategoriaModel() { 
 
+               Descricao = txt_Categoria.Text
+
+            });
+
+            using (var db = new LiteDatabase("banco.db"))
+            {
+                var teste = db.GetCollection<CategoriaModel>();
+                var colecao = teste.FindAll();
+                list_Categoria.Items.Clear();
+                list_Categoria.Items.AddRange(colecao.Select(q => q.Descricao).ToArray());
+                
+            }
+        }
         private void btn_Atualizar_Click(object sender, EventArgs e)
         {
-            list_Categoria.Items.Remove(txt_Categoria.Text);
-            categoria.Remove(txt_Categoria.Text);
-            txt_Categoria.Text = "";
+            
+        }
+
+        private void list_Categoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

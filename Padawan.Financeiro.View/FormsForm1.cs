@@ -17,13 +17,7 @@ namespace Padawan.Financeiro.View
             //como pego a lista ja instaciada na outra tela 
             InitializeComponent();
             balanco = new Balanco();
-          
-            
-            //foreach (var item in)
-            //{
-            //    cmb_Categoria.Items.Add(item);
-            //}
-            
+            txt_ListaBalanco.Text =Convert.ToString(balanco.CalcularSaldo());
         }
 
         private void btn_Adicionar_Click(object sender, EventArgs e)
@@ -34,6 +28,10 @@ namespace Padawan.Financeiro.View
             if (cmb_Tipo.Text == "Credito")
             {
                 balanco.Add(new Credito(double.Parse(txt_valor.Text)));
+            }
+            if (cmb_Tipo.Text == "Debito")
+            {
+                balanco.Add(new Debito(double.Parse(txt_valor.Text)));
             }
 
             txt_ListaBalanco.Text = Convert.ToString(balanco.Saldo);

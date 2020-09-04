@@ -1,46 +1,62 @@
-﻿using Padawan.Financeiro.Negocio.Interfaces;
+﻿using LiteDB;
+using Padawan.Financeiro.Negocio.Interfaces;
 using Padawan.Financeiro.Negocio.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Padawan.Financeiro.Negocio
 {
     public class Balanco : IBalanco
     {
 
-        public  double Saldo { get => CalcularSaldo();}
+       public  double Saldo { get => CalcularSaldo();}
        public  List<IOperacao> Operacoes { get; } = new List<IOperacao>();
 
         
 
-        private  double CalcularSaldo()
+        public double CalcularSaldo()
         {
             double result = 0;
 
-            foreach (var item in Operacoes)
+            using (var db = new LiteDatabase("banco.db"))
             {
-                if (item is Debito)
+                var teste = db.GetCollection<IOperacao>();
+                var colecao = teste.FindAll();
+                
+                colecao.ToList().ForEach(p => 
                 {
-                    result -= item.Valor;
-                }
-                if (item is Credito)
-                {
-                    result += item.Valor;
-                }
+                    if (p is Debito)
+                    {
+                        result -= p.Valor;
+                    }
+                    if (p is Credito)
+                    {
+                        result += p.Valor;
+                    }
+                });
             }
             return result;
         }
 
         public void Add(IOperacao operacao)
         {
-            Operacoes.Add(operacao);
-            
+            using (var db = new LiteDatabase("banco.db"))
+            {
+                var teste = db.GetCollection<IOperacao>("Operacao");
+                teste.Insert(operacao);
+            }
         }
 
         public  void Delete(IOperacao operacao)
         {
-            Operacoes.Remove(operacao);
-           
+
+            using (var db = new LiteDatabase("banco.db"))
+            {
+                var teste = db.GetCollection<IOperacao>("Operacao");
+                // teste.Delete()
+            }
+
         }
     }
 }

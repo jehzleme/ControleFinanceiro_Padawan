@@ -53,7 +53,7 @@
             // 
             // btn_RemoverDaLista
             // 
-            this.btn_RemoverDaLista.Location = new System.Drawing.Point(339, 232);
+            this.btn_RemoverDaLista.Location = new System.Drawing.Point(339, 245);
             this.btn_RemoverDaLista.Name = "btn_RemoverDaLista";
             this.btn_RemoverDaLista.Size = new System.Drawing.Size(198, 23);
             this.btn_RemoverDaLista.TabIndex = 3;
@@ -69,8 +69,9 @@
             this.list_Categoria.Name = "list_Categoria";
             this.list_Categoria.Size = new System.Drawing.Size(198, 154);
             this.list_Categoria.TabIndex = 4;
+            this.list_Categoria.SelectedIndexChanged += new System.EventHandler(this.list_Categoria_SelectedIndexChanged);
             // 
-            // Categoria
+            // FormsCategoria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -79,7 +80,7 @@
             this.Controls.Add(this.btn_RemoverDaLista);
             this.Controls.Add(this.btn_AdicionarCategoria);
             this.Controls.Add(this.txt_Categoria);
-            this.Name = "Categoria";
+            this.Name = "FormsCategoria";
             this.Text = "Categoria";
             this.ResumeLayout(false);
             this.PerformLayout();

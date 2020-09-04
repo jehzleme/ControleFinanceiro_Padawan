@@ -1,23 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using LiteDB;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Padawan.Financeiro.Negocio.Model
 {
     public class Categoria
     {
-        public void Add(string descricao)
+        private string text;
+
+        public Categoria()
         {
-            if (!(descricao.Length <= 4))
+        }
+
+        public Categoria(string text)
+        {
+            this.text = text;
+        }
+
+        public string Descricao { get; set; }
+
+        public void Add(CategoriaModel operacao)
+        {
+            using (var db = new LiteDatabase("banco.db"))
             {
-                BalancoStatic.Lista.Add(descricao);
+                var teste = db.GetCollection<CategoriaModel>();
+                teste.Insert(operacao);
             }
         }
-        public void Remove(string descricao)
-        {
-            BalancoStatic.Lista.Remove(descricao);
-        }
 
+        
+    }
 
-       
+    public class CategoriaModel
+    {
+        public string Descricao { get; set; }
+
     }
 
 
